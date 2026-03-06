@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa85350ae37cb5a44a80569320ec35b0, type: 3}
+  m_Name: BasicWeaponData
+  m_EditorClassIdentifier: GeometrySurvivor::WeaponData
+  weaponName: "\uAE30\uBCF8 \uBB34\uAE30"
+  baseDamage: 10
+  fireRate: 2
+  projectileSpeed: 15
+  projectilePrefab: {fileID: 260864183127310949, guid: 61f54890c8cb1524fac1331127eaea0c, type: 3}
+  levelBonuses:
+  - damageMultiplier: 1
+    fireRateMultiplier: 1
+    projectileCount: 1
+    particleScale: 1
+  - damageMultiplier: 1.2
+    fireRateMultiplier: 1.1
+    projectileCount: 1
+    particleScale: 1.2
+  - damageMultiplier: 1.5
+    fireRateMultiplier: 1.2
+    projectileCount: 2
+    particleScale: 1.5
+  - damageMultiplier: 1.8
+    fireRateMultiplier: 1.3
+    projectileCount: 3
+    particleScale: 1.8
+  - damageMultiplier: 2.2
+    fireRateMultiplier: 1.5
+    projectileCount: 4
+    particleScale: 2
+  - damageMultiplier: 3
+    fireRateMultiplier: 2
+    projectileCount: 5
+    particleScale: 2.5
