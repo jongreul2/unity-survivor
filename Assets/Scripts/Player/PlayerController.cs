@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     private float _damageCooldown = 0.5f;
     private float _lastDamageTime;
+    private Vector2 _moveInput;
 
     private void Start()
     {
@@ -25,15 +27,26 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        ReadInput();
         HandleMovement();
         ClampPosition();
     }
 
+    private void ReadInput()
+    {
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        _moveInput = Vector2.zero;
+        if (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed) _moveInput.y += 1f;
+        if (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed) _moveInput.y -= 1f;
+        if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed) _moveInput.x += 1f;
+        if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed) _moveInput.x -= 1f;
+    }
+
     private void HandleMovement()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-        Vector3 dir = new Vector3(h, 0f, v).normalized;
+        Vector3 dir = new Vector3(_moveInput.x, 0f, _moveInput.y).normalized;
         transform.position += dir * (moveSpeed * Time.deltaTime);
     }
 
