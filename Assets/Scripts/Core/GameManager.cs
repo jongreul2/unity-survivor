@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     public event Action OnGameOver;
     public event Action OnGameCleared;
 
+    private WorldSpaceBar _playerXPBar;
+
     private void Start()
     {
         State = GameState.Playing;
@@ -31,9 +33,19 @@ public class GameManager : MonoBehaviour
         weaponManager.Initialize(player.transform, enemyManager);
         xpManager.Initialize(player.transform);
 
+        // 플레이어 XP 월드 스페이스 바
+        _playerXPBar = player.GetComponent<WorldSpaceBar>();
+        if (_playerXPBar == null)
+            _playerXPBar = player.gameObject.AddComponent<WorldSpaceBar>();
+        _playerXPBar.barColor = new Color(0f, 0.8f, 1f);
+        _playerXPBar.barWidth = 1.0f;
+        _playerXPBar.barHeight = 0.06f;
+        _playerXPBar.yOffset = 1.2f;
+        _playerXPBar.SetValue(0f);
+
         if (uiManager != null)
         {
-            uiManager.Initialize(this, player, xpManager.XPSystem);
+            uiManager.Initialize(this, player, xpManager.XPSystem, _playerXPBar);
         }
 
         xpManager.XPSystem.OnLevelUp += OnPlayerLevelUp;

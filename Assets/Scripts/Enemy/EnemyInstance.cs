@@ -4,12 +4,14 @@ using UnityEngine;
 public class EnemyInstance
 {
     public float currentHP;
+    public float maxHP;
     public float moveSpeed;
     public Transform transform;
     public EnemyData data;
     public bool isActive;
 
     public bool IsDead => currentHP <= 0f;
+    public float HPRatio => maxHP > 0f ? currentHP / maxHP : 0f;
 
     public void TakeDamage(float amount)
     {

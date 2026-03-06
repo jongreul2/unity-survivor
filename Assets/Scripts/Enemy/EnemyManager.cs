@@ -80,6 +80,7 @@ public class EnemyManager : MonoBehaviour
         var instance = new EnemyInstance
         {
             currentHP = data.maxHP * hpMultiplier,
+            maxHP = data.maxHP * hpMultiplier,
             moveSpeed = data.moveSpeed,
             transform = obj.transform,
             data = data,
@@ -93,6 +94,16 @@ public class EnemyManager : MonoBehaviour
             damageHandler.enemyManager = this;
             damageHandler.particleManager = _particleManager;
             damageHandler.xpManager = _xpManager;
+
+            var healthBar = obj.GetComponent<WorldSpaceBar>();
+            if (healthBar == null)
+                healthBar = obj.AddComponent<WorldSpaceBar>();
+            healthBar.barColor = new Color(1f, 0.2f, 0.2f);
+            healthBar.barWidth = 0.8f;
+            healthBar.barHeight = 0.08f;
+            healthBar.yOffset = 1.0f;
+            healthBar.SetValue(1f);
+            damageHandler.healthBar = healthBar;
         }
 
         _enemies.Add(instance);

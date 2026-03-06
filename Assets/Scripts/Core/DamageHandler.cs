@@ -7,6 +7,7 @@ public class DamageHandler : MonoBehaviour
     [HideInInspector] public EnemyManager enemyManager;
     [HideInInspector] public ParticleManager particleManager;
     [HideInInspector] public XPManager xpManager;
+    [HideInInspector] public WorldSpaceBar healthBar;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,6 +17,9 @@ public class DamageHandler : MonoBehaviour
         if (projHandler != null && projHandler.projectileInstance != null && projHandler.projectileInstance.isActive)
         {
             enemyInstance.TakeDamage(projHandler.projectileInstance.damage);
+
+            if (healthBar != null)
+                healthBar.SetValue(enemyInstance.HPRatio);
 
             particleManager?.Play(ParticleType.HitSpark, transform.position, enemyInstance.data.color);
 

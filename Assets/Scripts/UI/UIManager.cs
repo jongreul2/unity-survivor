@@ -22,12 +22,14 @@ public class UIManager : MonoBehaviour
     private GameManager _gameManager;
     private PlayerController _player;
     private XPSystem _xpSystem;
+    private WorldSpaceBar _playerXPBar;
 
-    public void Initialize(GameManager gameManager, PlayerController player, XPSystem xpSystem)
+    public void Initialize(GameManager gameManager, PlayerController player, XPSystem xpSystem, WorldSpaceBar playerXPBar = null)
     {
         _gameManager = gameManager;
         _player = player;
         _xpSystem = xpSystem;
+        _playerXPBar = playerXPBar;
 
         gameOverPanel.SetActive(false);
         clearedPanel.SetActive(false);
@@ -48,11 +50,14 @@ public class UIManager : MonoBehaviour
 
         if (!_xpSystem.IsMaxLevel)
         {
-            xpBar.value = (float)_xpSystem.CurrentXP / _xpSystem.XPForNextLevel;
+            float xpRatio = (float)_xpSystem.CurrentXP / _xpSystem.XPForNextLevel;
+            xpBar.value = xpRatio;
+            if (_playerXPBar != null) _playerXPBar.SetValue(xpRatio);
         }
         else
         {
             xpBar.value = 1f;
+            if (_playerXPBar != null) _playerXPBar.SetValue(1f);
         }
 
         levelText.text = $"Lv.{_xpSystem.CurrentLevel}";

@@ -40,4 +40,18 @@ public class EnemyManagerTest
 
         Object.DestroyImmediate(obj);
     }
+
+    [Test]
+    public void EnemyInstance_HasMaxHP_Field()
+    {
+        var instance = new EnemyInstance { currentHP = 50f, maxHP = 50f, isActive = true };
+        Assert.AreEqual(50f, instance.maxHP);
+    }
+
+    [Test]
+    public void EnemyInstance_HPRatio_ReturnsCorrectValue()
+    {
+        var instance = new EnemyInstance { currentHP = 30f, maxHP = 50f, isActive = true };
+        Assert.AreEqual(0.6f, instance.HPRatio, 0.001f);
+    }
 }
