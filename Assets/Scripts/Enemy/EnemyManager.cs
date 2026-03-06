@@ -12,13 +12,27 @@ public class EnemyManager : MonoBehaviour
     private Transform _playerTransform;
     private float _gameTime;
     private readonly Dictionary<SpawnWaveData, float> _lastSpawnTimes = new();
+    private ParticleManager _particleManager;
+    private XPManager _xpManager;
 
     public int ActiveCount => _enemies.FindAll(e => e.isActive).Count;
     public List<EnemyInstance> Enemies => _enemies;
 
-    public void Initialize(Transform playerTransform)
+    private int ActiveCountForData(EnemyData data)
+    {
+        int count = 0;
+        for (int i = 0; i < _enemies.Count; i++)
+        {
+            if (_enemies[i].isActive && _enemies[i].data == data) count++;
+        }
+        return count;
+    }
+
+    public void Initialize(Transform playerTransform, ParticleManager particleManager = null, XPManager xpManager = null)
     {
         _playerTransform = playerTransform;
+        _particleManager = particleManager;
+        _xpManager = xpManager;
         _gameTime = 0f;
 
         foreach (var wave in waves)
@@ -45,7 +59,7 @@ public class EnemyManager : MonoBehaviour
         foreach (var wave in waves)
         {
             if (_gameTime < wave.startTime) continue;
-            if (ActiveCount >= wave.maxConcurrentEnemies) continue;
+            if (ActiveCountForData(wave.enemyData) >= wave.maxConcurrentEnemies) continue;
 
             if (_gameTime - _lastSpawnTimes[wave] >= wave.spawnInterval)
             {
@@ -77,6 +91,8 @@ public class EnemyManager : MonoBehaviour
         {
             damageHandler.enemyInstance = instance;
             damageHandler.enemyManager = this;
+            damageHandler.particleManager = _particleManager;
+            damageHandler.xpManager = _xpManager;
         }
 
         _enemies.Add(instance);

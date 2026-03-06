@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         State = GameState.Playing;
         Timer = new GameTimer(gameDuration);
 
-        enemyManager.Initialize(player.transform);
+        enemyManager.Initialize(player.transform, particleManager, xpManager);
         weaponManager.Initialize(player.transform, enemyManager);
         xpManager.Initialize(player.transform);
 
